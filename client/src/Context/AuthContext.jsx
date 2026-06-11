@@ -4,7 +4,7 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [auth, setAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,16 +14,16 @@ export const AuthProvider = ({ children }) => {
 
     if (storedUser && token) {
       setUser(JSON.parse(storedUser));
+      setIsAuth(true);
     }
 
     setLoading(false);
   }, []);
 
   const login = (token, user) => {
-    console.log(token, user, "tokenuser");
-
     localStorage.setItem("user", JSON.stringify(user));
-    setAuth(true);
+    localStorage.setItem("token", token);
+    setIsAuth(true);
     setUser(user);
   };
 
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
 
     localStorage.removeItem("user");
-    setAuth(false);
+    setIsAuth(false);
 
     setUser(null);
   };
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
         loading,
         login,
         logout,
-        isAuth: auth,
+        isAuth,
       }}
     >
       {children}

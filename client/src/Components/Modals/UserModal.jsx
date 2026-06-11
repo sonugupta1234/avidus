@@ -1,5 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { createTask, getAllTask, updateTask } from "../../api/authApi";
+import { showError, showSuccess } from "../../utils/toast";
 
 const taskSchema = Yup.object({
   title: Yup.string()
@@ -11,27 +13,41 @@ const taskSchema = Yup.object({
     .trim()
     .required("Description is required")
     .min(10, "Description must be at least 10 characters"),
-
-  status: Yup.string().required("Status is required"),
 });
 
-const UserModal = ({ onClose }) => {
+const UserModal = ({ onClose, singleUserData, fetchTasks }) => {
   const initialValues = {
-    title: "",
-    description: "",
-    status: "Pending",
+    title: singleUserData?.title || "",
+    description: singleUserData?.description || "",
+    status: singleUserData?.status || "Pending",
   };
 
-  const handleSubmit = (values) => {
-    console.log(values);
-    onClose();
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      if (singleUserData?._id) {
+        const data = await updateTask(singleUserData._id, values);
+        showSuccess("Task Updated Sucessfully");
+      } else {
+        const data = await createTask(values);
+        showSuccess("Task Created Sucessfully");
+      }
+      fetchTasks();
+
+      resetForm();
+      onClose();
+    } catch (error) {
+      showError(error);
+      console.log(error);
+    }
   };
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
       <div className="bg-white rounded-xl p-6 w-full max-w-md">
         <div className="flex justify-between mb-4">
-          <h2 className="text-2xl font-bold">Create Task</h2>
+          <h2 className="text-2xl font-bold">
+            {singleUserData?._id ? "Edit Task" : "Create Task"}
+          </h2>
 
           <button onClick={onClose}>✕</button>
         </div>

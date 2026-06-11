@@ -15,7 +15,7 @@ const loginSchema = Yup.object({
 });
 
 const LoginForm = () => {
-  const { login, isAdmin } = useAuth(AuthContext);
+  const { login } = useAuth(AuthContext);
   const navigate = useNavigate();
   const initialValues = {
     email: "",

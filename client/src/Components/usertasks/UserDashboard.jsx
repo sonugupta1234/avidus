@@ -1,16 +1,27 @@
+import { useEffect, useState } from "react";
+import { getAllTask } from "../../api/authApi";
 import Navbar from "../../Components/navigation/Navbar";
 import Sidebar from "../../Components/navigation/Sidebar";
 import AuthContext from "../../Context/AuthContext";
 import useAuth from "../../Pages/hooks/useAuth";
 
 const UserDashboard = () => {
+  const [tasks, setTasks] = useState([]);
+
   const { user } = useAuth(AuthContext);
-  const stats = {
-    totalTasks: 15,
-    completedTasks: 8,
-    pendingTasks: 5,
-    inProgressTasks: 2,
+
+  const fetchTasks = async () => {
+    try {
+      const res = await getAllTask();
+      setTasks(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   return (
     <div className="flex-1 bg-gray-100 p-6 overflow-auto">
@@ -19,27 +30,27 @@ const UserDashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white shadow rounded-lg p-6">
           <h3 className="text-gray-500">Total Tasks</h3>
-          <p className="text-3xl font-bold">{stats.totalTasks}</p>
+          <p className="text-3xl font-bold">{tasks.length}</p>
         </div>
 
         <div className="bg-white shadow rounded-lg p-6">
           <h3 className="text-gray-500">Completed</h3>
           <p className="text-3xl font-bold text-green-600">
-            {stats.completedTasks}
+            {tasks?.filter((el, index) => el.status == "Completed").length}
           </p>
         </div>
 
         <div className="bg-white shadow rounded-lg p-6">
           <h3 className="text-gray-500">Pending</h3>
           <p className="text-3xl font-bold text-yellow-600">
-            {stats.pendingTasks}
+            {tasks?.filter((el, index) => el.status == "Pending").length}
           </p>
         </div>
 
         <div className="bg-white shadow rounded-lg p-6">
           <h3 className="text-gray-500">In Progress</h3>
           <p className="text-3xl font-bold text-blue-600">
-            {stats.inProgressTasks}
+            {tasks?.filter((el, index) => el.status == "In Progress").length}
           </p>
         </div>
       </div>

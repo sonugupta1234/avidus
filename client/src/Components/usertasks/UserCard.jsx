@@ -1,29 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import TaskTable from "./UserTable";
+import UserTable from "./UserTable";
 import Navbar from "../navigation/Navbar";
 import Sidebar from "../navigation/Sidebar";
-import TaskModal from "./UserModal";
+import UserModal from "../Modals/UserModal";
+import { getAllTask } from "../../api/authApi";
 
 const UserCard = () => {
   const [showModal, setShowModal] = useState(false);
+  const [tasks, setTasks] = useState([]);
 
-  const tasks = [
-    {
-      id: 1,
-      title: "Learn React",
-      description: "Complete React Hooks",
-      status: "Pending",
-      createdAt: "10 Jun 2026",
-    },
-    {
-      id: 2,
-      title: "Build API",
-      description: "Create auth APIs",
-      status: "Completed",
-      createdAt: "09 Jun 2026",
-    },
-  ];
+  const fetchTasks = async () => {
+    try {
+      const res = await getAllTask();
+      setTasks(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   return (
     <div className="flex-1 bg-gray-100 p-6 overflow-auto">
@@ -38,9 +36,13 @@ const UserCard = () => {
         </button>
       </div>
 
-      <TaskTable tasks={tasks} />
-
-      {showModal && <TaskModal onClose={() => setShowModal(false)} />}
+      <UserTable tasks={tasks} fetchTasks={fetchTasks} />
+      {showModal && (
+        <UserModal
+          onClose={() => setShowModal(false)}
+          fetchTasks={fetchTasks}
+        />
+      )}
     </div>
   );
 };
