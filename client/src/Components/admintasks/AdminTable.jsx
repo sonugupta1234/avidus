@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
-
 const AdminTable = ({ tasks, handleDelete }) => {
-  console.log(tasks, "tasks");
   return (
     <div className="flex-1 bg-gray-100 p-6 overflow-auto">
       <div className="flex justify-between items-center mb-6">

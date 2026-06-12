@@ -1,6 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { createTask, getAllTask, updateTask } from "../../api/authApi";
+import { createTask, updateTask } from "../../api/authApi";
 import { showError, showSuccess } from "../../utils/toast";
 
 const taskSchema = Yup.object({
@@ -25,11 +25,11 @@ const UserModal = ({ onClose, singleUserData, fetchTasks }) => {
   const handleSubmit = async (values, { resetForm }) => {
     try {
       if (singleUserData?._id) {
-        const data = await updateTask(singleUserData._id, values);
-        showSuccess("Task Updated Sucessfully");
+        const res = await updateTask(singleUserData._id, values);
+        showSuccess(res.data.message);
       } else {
-        const data = await createTask(values);
-        showSuccess("Task Created Sucessfully");
+        const res = await createTask(values);
+        showSuccess(res.data.message);
       }
       fetchTasks();
 

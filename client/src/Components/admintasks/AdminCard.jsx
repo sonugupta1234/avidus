@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-
-import Navbar from "../navigation/Navbar";
-import Sidebar from "../navigation/Sidebar";
 import AdminTable from "./AdminTable";
 import { deleteAdminTask, getAdminTasks } from "../../api/authApi";
 import { showError, showSuccess } from "../../utils/toast";

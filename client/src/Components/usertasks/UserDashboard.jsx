@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { getAllTask } from "../../api/authApi";
-import Navbar from "../../Components/navigation/Navbar";
-import Sidebar from "../../Components/navigation/Sidebar";
 import AuthContext from "../../Context/AuthContext";
 import useAuth from "../../Pages/hooks/useAuth";
 
@@ -36,21 +34,21 @@ const UserDashboard = () => {
         <div className="bg-white shadow rounded-lg p-6">
           <h3 className="text-gray-500">Completed</h3>
           <p className="text-3xl font-bold text-green-600">
-            {tasks?.filter((el, index) => el.status == "Completed").length}
+            {tasks?.filter((el, index) => el.status === "Completed").length}
           </p>
         </div>
 
         <div className="bg-white shadow rounded-lg p-6">
           <h3 className="text-gray-500">Pending</h3>
           <p className="text-3xl font-bold text-yellow-600">
-            {tasks?.filter((el, index) => el.status == "Pending").length}
+            {tasks?.filter((el, index) => el.status === "Pending").length}
           </p>
         </div>
 
         <div className="bg-white shadow rounded-lg p-6">
           <h3 className="text-gray-500">In Progress</h3>
           <p className="text-3xl font-bold text-blue-600">
-            {tasks?.filter((el, index) => el.status == "In Progress").length}
+            {tasks?.filter((el, index) => el.status === "In Progress").length}
           </p>
         </div>
       </div>

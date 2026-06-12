@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 
 import UserTable from "./UserTable";
-import Navbar from "../navigation/Navbar";
-import Sidebar from "../navigation/Sidebar";
 import UserModal from "../Modals/UserModal";
 import { getAllTask } from "../../api/authApi";
 
