@@ -1,7 +1,7 @@
 Taskflow
 
 Taskflow is an Task Manager website where user can create task, edit task, delete task and also admin can manage user activity<br/>
-like deleting User, deleting task, managing active/inactive user....It has also Activity log created of each actions of task
+like deleting User, deleting task, managing active/inactive user....It has also Activity log created of each actions of task...Responsiveness of Each Page is done
 
 
 Tech Stack:-
