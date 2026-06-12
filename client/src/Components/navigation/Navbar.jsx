@@ -1,9 +1,10 @@
 import { CiUser } from "react-icons/ci";
+import { FiMenu } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../Pages/hooks/useAuth";
 import AuthContext from "../../Context/AuthContext";
 
-const Navbar = () => {
+const Navbar = ({ setSidebarOpen }) => {
   const navigate = useNavigate();
   const { user, logout } = useAuth(AuthContext);
 
@@ -13,10 +14,21 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-blue-200 shadow-md px-6 py-4 flex items-center justify-between">
-      <Link to="/">
-        <h1 className="text-2xl font-bold text-red-600">TaskFlow</h1>
-      </Link>
+    <nav className="bg-blue-200 shadow-md px-4 md:px-6 py-4 flex items-center justify-between">
+      {/* Left Section */}
+      <div className="flex items-center gap-3">
+        <button onClick={() => setSidebarOpen(true)} className="md:hidden">
+          <FiMenu size={24} />
+        </button>
+
+        <Link to="/">
+          <h1 className="text-xl md:text-2xl font-bold text-red-600">
+            TaskFlow
+          </h1>
+        </Link>
+      </div>
+
+      {/* Right Section */}
       <div className="relative group">
         <button className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 transition">
           <CiUser size={22} />

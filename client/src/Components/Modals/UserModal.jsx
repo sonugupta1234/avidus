@@ -79,7 +79,7 @@ const UserModal = ({ onClose, singleUserData, fetchTasks }) => {
                 <ErrorMessage
                   name="title"
                   component="p"
-                  className="text-red-500 text-sm mt-1"
+                  className="text-red-500 text-sm mt-1 text-left"
                 />
               </div>
 
@@ -105,7 +105,7 @@ const UserModal = ({ onClose, singleUserData, fetchTasks }) => {
                 <ErrorMessage
                   name="description"
                   component="p"
-                  className="text-red-500 text-sm mt-1"
+                  className="text-red-500 text-sm mt-1 text-left"
                 />
               </div>
 

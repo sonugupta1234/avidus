@@ -3,10 +3,8 @@ import HomePage from "../Pages/HomePage";
 import Login from "../Pages/auth/Login";
 import Register from "../Pages/auth/Register";
 import Tasks from "../Pages/user/Tasks";
-// import AdminDashboard from "../Pages/admin/Dashboard";
 import UserManagement from "../Pages/admin/UserManagement";
 import TasksMonitor from "../Pages/admin/TasksMonitor";
-import ActivityLogs from "../Pages/admin/ActivityLogs";
 import PrivateRoutes from "./PrivateRoutes";
 
 const AllRoutes = () => {
@@ -21,7 +19,6 @@ const AllRoutes = () => {
       <Route element={<PrivateRoutes />}>
         <Route path="/tasks" element={<Tasks />} />
 
-        <Route path="/admin/logs" element={<ActivityLogs />} />
         <Route path="/admin/tasks" element={<TasksMonitor />} />
 
         <Route path="/admin/users" element={<UserManagement />} />

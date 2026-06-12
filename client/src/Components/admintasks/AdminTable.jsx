@@ -1,14 +1,7 @@
 import { useEffect, useState } from "react";
 
-const AdminTable = ({ tasks }) => {
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this task?")) {
-      //   setTasks(tasks.filter((task) => task._id !== id));
-      // API Call
-      // await axios.delete(`/admin/tasks/${id}`);
-    }
-  };
-
+const AdminTable = ({ tasks, handleDelete }) => {
+  console.log(tasks, "tasks");
   return (
     <div className="flex-1 bg-gray-100 p-6 overflow-auto">
       <div className="flex justify-between items-center mb-6">
@@ -34,13 +27,13 @@ const AdminTable = ({ tasks }) => {
           </thead>
 
           <tbody>
-            {tasks.map((task) => (
+            {tasks?.map((task) => (
               <tr key={task._id} className="border-t">
                 <td className="p-4">{task.title}</td>
 
                 <td className="p-4">{task.description}</td>
 
-                <td className="p-4">{task.createdBy}</td>
+                <td className="p-4">{task.createdBy.name}</td>
 
                 <td className="p-4">
                   <span
@@ -56,7 +49,9 @@ const AdminTable = ({ tasks }) => {
                   </span>
                 </td>
 
-                <td className="p-4">{task.createdAt}</td>
+                <td className="p-4">
+                  {new Date(task.createdAt).toLocaleDateString("en-GB")}
+                </td>
 
                 <td className="p-4 text-center">
                   <button

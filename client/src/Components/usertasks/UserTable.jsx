@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import UserModal from "../Modals/UserModal";
 import { deleteTask, getSingleTask } from "../../api/authApi";
-import { showSuccess } from "../../utils/toast";
+import { showError, showSuccess } from "../../utils/toast";
 
 const UserTable = ({ tasks, fetchTasks }) => {
   const [showModal, setShowModal] = useState(false);
   const [singleUserData, setSingleUserData] = useState({});
 
   const handleEdit = async (id) => {
-    setShowModal(true);
     try {
       const singledata = await getSingleTask(id);
       setSingleUserData(singledata.data);
+      setShowModal(true);
     } catch (error) {
       console.log(error);
     }
@@ -24,6 +24,7 @@ const UserTable = ({ tasks, fetchTasks }) => {
       fetchTasks();
     } catch (error) {
       console.log(error);
+      showError(error);
     }
   };
 
@@ -97,7 +98,7 @@ const UserTable = ({ tasks, fetchTasks }) => {
           )}
         </div>
       ) : (
-        <h1 className="text-bold">No tasks Found Create One.</h1>
+        <h1 className="text-bold text-2xl">No tasks Found Create One.</h1>
       )}
     </>
   );

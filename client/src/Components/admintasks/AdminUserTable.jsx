@@ -1,36 +1,23 @@
 import React from "react";
 
-const AdminUserTable = ({ users, setUsers }) => {
-  const handleStatusToggle = (id) => {
-    setUsers((prev) =>
-      prev.map((user) =>
-        user._id === id
-          ? {
-              ...user,
-              status: user.status === "Active" ? "Inactive" : "Active",
-            }
-          : user,
-      ),
-    );
-
-    // API Call
-    // await axios.patch(`/admin/users/${id}/status`)
-  };
-
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      setUsers((prev) => prev.filter((user) => user._id !== id));
-
-      // API Call
-      // await axios.delete(`/admin/users/${id}`)
-    }
-  };
-
+const AdminUserTable = ({
+  users,
+  handleDelete,
+  handleSearch,
+  handleStatusChange,
+}) => {
   return (
     <div className="flex-1 bg-gray-100 p-6 overflow-auto">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">User Management</h1>
       </div>
+
+      <input
+        type="text"
+        placeholder="Search users..."
+        onChange={(e) => handleSearch(e.target.value)}
+        className="border rounded-lg px-4 py-2 mb-4 w-full max-w-md"
+      />
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <table className="w-full">
@@ -80,24 +67,35 @@ const AdminUserTable = ({ users, setUsers }) => {
                 </td>
 
                 <td className="p-4 text-center space-x-2">
-                  <button
-                    onClick={() => handleStatusToggle(user._id)}
-                    className={`px-3 py-1 rounded text-white ${
-                      user.status === "Active"
-                        ? "bg-yellow-500 hover:bg-yellow-600"
-                        : "bg-green-500 hover:bg-green-600"
-                    }`}
-                  >
-                    {user.status === "Active" ? "Deactivate" : "Activate"}
-                  </button>
+                  {user.role !== "admin" ? (
+                    <>
+                      <button
+                        onClick={() =>
+                          handleStatusChange(
+                            user._id,
+                            user.status === "active" ? "inactive" : "active",
+                          )
+                        }
+                        className={`px-3 py-1 rounded text-white ${
+                          user.status === "active"
+                            ? "bg-yellow-500 hover:bg-yellow-600"
+                            : "bg-green-500 hover:bg-green-600"
+                        }`}
+                      >
+                        {user.status === "active" ? "Deactivate" : "Activate"}
+                      </button>
 
-                  {user.role !== "Admin" && (
-                    <button
-                      onClick={() => handleDelete(user._id)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-                    >
-                      Delete
-                    </button>
+                      <button
+                        onClick={() => handleDelete(user._id)}
+                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                      >
+                        Delete
+                      </button>
+                    </>
+                  ) : (
+                    <span className="text-gray-500 font-medium">
+                      No Actions
+                    </span>
                   )}
                 </td>
               </tr>

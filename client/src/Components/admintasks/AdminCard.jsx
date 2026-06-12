@@ -1,30 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Navbar from "../navigation/Navbar";
 import Sidebar from "../navigation/Sidebar";
-import TaskTable from "./AdminTable";
+import AdminTable from "./AdminTable";
+import { deleteAdminTask, getAdminTasks } from "../../api/authApi";
+import { showError, showSuccess } from "../../utils/toast";
 
 const AdminCard = () => {
-  const tasks = [
-    {
-      id: 1,
-      title: "Learn React",
-      description: "Complete React Hooks",
-      status: "Pending",
-      createdAt: "10 Jun 2026",
-    },
-    {
-      id: 2,
-      title: "Build API",
-      description: "Create auth APIs",
-      status: "Completed",
-      createdAt: "09 Jun 2026",
-    },
-  ];
+  const [tasks, setTasks] = useState([]);
+  const fetchTasks = async () => {
+    try {
+      const res = await getAdminTasks();
+      setTasks(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await deleteAdminTask(id);
+      showSuccess(res.data.message);
+      fetchTasks();
+    } catch (error) {
+      console.log(error);
+      showError(error);
+    }
+  };
 
   return (
     <div className="flex-1 bg-gray-100 p-6 overflow-auto">
-      <TaskTable tasks={tasks} />
+      <AdminTable tasks={tasks} handleDelete={handleDelete} />
     </div>
   );
 };

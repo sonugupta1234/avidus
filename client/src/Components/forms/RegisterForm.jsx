@@ -2,6 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { registerUser } from "../../api/authApi";
 import { showError, showSuccess } from "../../utils/toast";
+import { useNavigate } from "react-router-dom";
 
 const registerSchema = Yup.object({
   name: Yup.string()
@@ -19,6 +20,7 @@ const registerSchema = Yup.object({
 });
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
   const initialValues = {
     name: "",
     email: "",
@@ -29,6 +31,7 @@ const RegisterForm = () => {
     try {
       registerUser(values);
       showSuccess("Registration Sucessfull");
+      navigate("/login");
       resetForm();
     } catch (error) {
       showError(error);
