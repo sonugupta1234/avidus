@@ -14,7 +14,7 @@ Tech Stack:-
 6. Node.js
 7. Mongodb
 
-Live Url:- https://avidus-tcdt.vercel.app/
+Live Url:- https://avidus-tcdt.vercel.app/ <br>
 Github Url:- https://github.com/sonugupta1234/avidus
 
 This Was an Solo project completed within 2 days..
