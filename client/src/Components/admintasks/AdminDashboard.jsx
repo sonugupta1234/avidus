@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import Navbar from "../../Components/navigation/Navbar";
-import Sidebar from "../../Components/navigation/Sidebar";
 import { getAdminDashboard } from "../../api/authApi";
 
 const AdminDashboard = () => {
